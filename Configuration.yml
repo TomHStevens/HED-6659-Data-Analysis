@@ -1,0 +1,51 @@
+beam:
+  energy: 18.0
+  source_distance: .inf
+  vector:
+    azimuth: 90.0
+    polar_angle: 90.0
+detectors:
+  VAREX1:
+    buffer: null
+    detector_type: planar
+    pixels:
+      columns: 2880
+      rows: 2880
+      size:
+      - 0.15
+      - 0.15
+    transform:
+      tilt:
+      - 0.0
+      - -0.7853981633974483
+      - 0.0
+      translation:
+      - 160.0
+      - -250.0
+      - -170.0
+  VAREX2:
+    buffer: null
+    detector_type: planar
+    pixels:
+      columns: 2880
+      rows: 2880
+      size:
+      - 0.15
+      - 0.15
+    saturation_level: 14000.0
+    transform:
+      tilt:
+      - 0.0
+      - -0.7853981633974483
+      - 0.0
+      translation:
+      - 160.0
+      - 250.0
+      - -170.0
+id: instrument
+oscillation_stage:
+  chi: 0.0
+  translation:
+  - 0.0
+  - 0.0
+  - 0.0
