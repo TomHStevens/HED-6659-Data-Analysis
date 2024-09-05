@@ -19,6 +19,7 @@ class PyFAIToHeXRD:
         self.location = None
         self.rotation = None
         self.energy = None
+
     def pyfai_rotation_matrix(self):
         """ The rotation order is 1 -> 2 -> 3.
         Rotation 3 is right-handed, Rotations 1 and 2 are left-handed.
@@ -66,7 +67,7 @@ class PyFAIToHeXRD:
         rotation_matrix_hexrd = np.dot(np.dot(pyfai_to_hexrd_mat, self.rotation_matrix_pyfai), pyfai_to_hexrd_mat)
         theta_y = np.arcsin(-rotation_matrix_hexrd[2, 0])
         cos_theta_y = np.cos(theta_y)
-        theta_x = np.arccos(np.around(rotation_matrix_hexrd[2, 2] / cos_theta_y, 8))
+        theta_x = np.arcsin(np.around(rotation_matrix_hexrd[2, 1] / cos_theta_y, 8))
         theta_z = np.arcsin(np.around(rotation_matrix_hexrd[1, 0] / cos_theta_y, 8))
         self.rotation = np.array([theta_x, theta_y, theta_z])
 
@@ -146,9 +147,8 @@ class HeXRDToPyFAI:
         rotation_matrix_pyfai = np.dot(np.dot(hexrd_to_pyfai_mat, self.rotation_matrix_hexrd), hexrd_to_pyfai_mat)
         self.theta2 = np.arcsin(rotation_matrix_pyfai[2, 0])
         cos_theta2 = np.cos(self.theta2)
-        self.theta1 = np.arccos(np.around(rotation_matrix_pyfai[2, 2] / cos_theta2, 8))
+        self.theta1 = np.arcsin(-np.around(rotation_matrix_pyfai[2, 1] / cos_theta2, 8))
         self.theta3 = np.arcsin(np.around(rotation_matrix_pyfai[1, 0] / cos_theta2, 8))
-        print(rotation_matrix_pyfai)
 
         inverse_rot = np.linalg.inv(rotation_matrix_pyfai)
         detector_centre = np.dot(hexrd_to_pyfai_mat, np.array(self.location)) / 1000
